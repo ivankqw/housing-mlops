@@ -1,0 +1,21 @@
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 431.984375 64" width="431.984375" height="64">
+  <!-- svg-source:excalidraw -->
+  
+  <defs>
+    <style class="style-fonts">
+      @font-face {
+        font-family: "Virgil";
+        src: url("https://excalidraw.com/Virgil.woff2");
+      }
+      @font-face {
+        font-family: "Cascadia";
+        src: url("https://excalidraw.com/Cascadia.woff2");
+      }
+      @font-face {
+        font-family: "Assistant";
+        src: url("https://excalidraw.com/Assistant-Regular.woff2");
+      }
+    </style>
+    
+  </defs>
+  <rect x="0" y="0" width="431.984375" height="64" fill="#ffffff"></rect><g stroke-linecap="round" transform="translate(10 10) rotate(0 47.6171875 22)"><path d="M0 0 C36.5 -0.61, 76.78 1.41, 95.23 0 M0 0 C24.75 -0.42, 51.47 -0.05, 95.23 0 M95.23 0 C94.3 17.76, 94.03 29.78, 95.23 44 M95.23 0 C94.8 13.99, 94.51 25.24, 95.23 44 M95.23 44 C74.42 46.43, 53.93 45.82, 0 44 M95.23 44 C68.25 44.38, 40.59 43.64, 0 44 M0 44 C1.37 31.66, 0.18 15.36, 0 0 M0 44 C0.27 33.91, -0.12 24.79, 0 0" stroke="#1e1e1e" stroke-width="2" fill="none"></path></g><g stroke-linecap="round" transform="translate(285.265625 10) rotate(0 68.359375 22)"><path d="M0 0 C40.12 1.79, 78.03 -0.88, 136.72 0 M0 0 C49.89 0.31, 99.43 -1.21, 136.72 0 M136.72 0 C135.84 11.29, 136.54 26.5, 136.72 44 M136.72 0 C135.71 14.44, 135.76 31.16, 136.72 44 M136.72 44 C87.83 46.35, 35.05 43.68, 0 44 M136.72 44 C96.86 44.42, 57.94 44.9, 0 44 M0 44 C-0.04 31.32, -1.93 19, 0 0 M0 44 C-0.3 29.35, -0.24 14.86, 0 0" stroke="#1e1e1e" stroke-width="2" fill="none"></path></g><g mask="url(#mask-PIHpJ73AD70IWRlg5PzRZ)" stroke-linecap="round"><g transform="translate(105.73400000000004 32) rotate(0 89.51600000000002 0)"><path d="M0.78 -0.39 C30.55 -0.34, 148.65 0.64, 178.21 0.74 M-0.27 -1.64 C29.92 -1.97, 150.35 -1.54, 180.49 -1" stroke="#1e1e1e" stroke-width="2" fill="none"></path></g><g transform="translate(105.73400000000004 32) rotate(0 89.51600000000002 0)"><path d="M156.92 7.33 C162.45 3.61, 170.54 1.28, 180.49 -1 M156.92 7.33 C164.92 3.58, 171.77 1.69, 180.49 -1" stroke="#1e1e1e" stroke-width="2" fill="none"></path></g><g transform="translate(105.73400000000004 32) rotate(0 89.51600000000002 0)"><path d="M157.08 -9.77 C162.64 -8.98, 170.69 -6.8, 180.49 -1 M157.08 -9.77 C165.11 -8.11, 171.91 -4.59, 180.49 -1" stroke="#1e1e1e" stroke-width="2" fill="none"></path></g></g><mask id="mask-PIHpJ73AD70IWRlg5PzRZ"><rect x="0" y="0" fill="#fff" width="385.7660000000001" height="132"></rect><rect x="137.59004974365234" y="19.5" fill="#000" width="115.31990051269531" height="25" opacity="1"></rect></mask><g transform="translate(25.447219848632812 19.5) rotate(0 32.16996765136719 12.5)"><text x="32.16996765136719" y="17.52" font-family="Virgil, Segoe UI Emoji" font-size="20px" fill="#1e1e1e" text-anchor="middle" style="white-space: pre;" direction="ltr" dominant-baseline="alphabetic">Airflow</text></g><g transform="translate(295.1150588989258 19.5) rotate(0 58.50994110107422 12.5)"><text x="58.50994110107422" y="17.52" font-family="Virgil, Segoe UI Emoji" font-size="20px" fill="#1e1e1e" text-anchor="middle" style="white-space: pre;" direction="ltr" dominant-baseline="alphabetic">PostgresDB</text></g><g transform="translate(137.59004974365234 19.5) rotate(0 58.251296054115585 11.991083637159704)"><text x="57.659950256347656" y="17.52" font-family="Virgil, Segoe UI Emoji" font-size="20px" fill="#1e1e1e" text-anchor="middle" style="white-space: pre;" direction="ltr" dominant-baseline="alphabetic">connects to</text></g></svg>
