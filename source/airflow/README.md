@@ -9,11 +9,17 @@ https://www.docker.com/products/docker-desktop/
 ```bash
 docker run --rm "debian:bullseye-slim" bash -c 'numfmt --to iec $(echo $(($(getconf _PHYS_PAGES) * $(getconf PAGE_SIZE))))'
 ```
-3. init database (run 1st time only)
+
+3. Create required directories (1st time only)
+```bash
+mkdir -p ./dags ./logs ./plugins ./config
+```
+
+4. init database (1st time only)
 ```bash
 docker compose up airflow-init
 ```
-4. Start the services (compose with build)
+5. Start the services (compose with build)
 ```bash 
 docker compose up --build
 ```
