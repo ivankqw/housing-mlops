@@ -116,7 +116,7 @@ services:
       start_period: 5s
     restart: always
     ports:
-      - "5432:5432"  # 5432 inside container and 5432 outside container
+      - "5434:5432"  # 5432 inside container and 5432 outside container
 
   redis:
     image: redis:latest
