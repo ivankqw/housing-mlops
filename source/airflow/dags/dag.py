@@ -4,7 +4,7 @@ from airflow.providers.postgres.hooks.postgres import PostgresHook
 from uranus import extract_ura_data_task
 from singstat import extract_cpi_task
 from datagovsg import extract_datagovsg_data_task
-from transform_datagovsg import transform_districts_task, transform_resale_flat_transactions, transform_rental_flats
+from transform_datagovsg import transform_districts_task, transform_resale_flat_transactions_task, transform_rental_flats_task
 
 default_args = {
     "owner": "airflow",
@@ -40,17 +40,11 @@ def property_pipeline():
     # task dependencies are defined in a straightforward way
     data_path_cpi = extract_cpi_task()
     data_path_private_transactions, data_path_private_rental, data_path_planning_decisions = extract_ura_data_task()
-    datagov_dict = extract_datagovsg_data_task()
-    transform_resale_flats_dict = transform_resale_flat_transactions(datagov_dict, transform_districts_task())
-    transform_rental_flats_dict = transform_rental_flats(datagov_dict)
-
-    # create_table()
-    # order_data = extract()
-    # transformed_data = transform(order_data)
-    # load(transformed_data)
-    # load(transform(extract())
-         
     
+    datagov_dict = extract_datagovsg_data_task()
+    districts_transformed_path = transform_districts_task()
+    data_path_resale_flats = transform_resale_flat_transactions_task(datagov_dict, districts_transformed_path)
+    data_path_rental_flats = transform_rental_flats_task(datagov_dict, districts_transformed_path)
 
 
 property_pipeline()

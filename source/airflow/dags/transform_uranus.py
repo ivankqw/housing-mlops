@@ -3,9 +3,22 @@ from airflow.decorators import task
 import requests
 import pandas as pd
 
+def private_get_month_year(date):
+    date = str(date)
+    # date is in format of MYY or MMYY
+    # if date is in format of MYY, add 0 in front
+    if len(date) == 3:
+        date = "0" + date
+    month = date[:2]
+    year = date[2:]
+    # add prefix to year 20
+    year = "20" + year
+    return (month, year)
 
 @task(multiple_outputs=True)
-def transform_private_transactions_and_rental(data_path: str, file_path_private_transactions : str, file_path_private_rental : str):
+def transform_private_transactions_and_rental(data_path: str,
+                                            file_path_private_transactions : str,
+                                            file_path_private_rental : str):
     print("Transforming private transactions and rental...")
 
     private_transactions = pd.read_csv(file_path_private_transactions)
@@ -14,18 +27,6 @@ def transform_private_transactions_and_rental(data_path: str, file_path_private_
     # add a column _id
     private_transactions.insert(0, "_id", range(1, 1 + len(private_transactions)))
     private_rental.insert(0, "_id", range(1, 1 + len(private_rental)))
-
-    def private_get_month_year(date):
-        date = str(date)
-        # date is in format of MYY or MMYY
-        # if date is in format of MYY, add 0 in front
-        if len(date) == 3:
-            date = "0" + date
-        month = date[:2]
-        year = date[2:]
-        # add prefix to year 20
-        year = "20" + year
-        return (month, year)
 
     # apply private_get_month_year function to each row, creating 2 new columns for month and year
     private_transactions["month"], private_transactions["year"] = zip(
