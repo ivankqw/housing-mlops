@@ -5,8 +5,9 @@ import pandas as pd
 from cfg import DATA_PATH, ADDRESSES_CSV, ONEMAP_API_URL
 
 
-def read_districts(data_path: str = DATA_PATH):
-    return pd.read_excel(data_path + "districts.xlsx")
+def read_districts():
+    print("DATAPATH", DATA_PATH + "districts.xlsx")
+    return pd.read_excel(DATA_PATH + "districts.xlsx")
 
 def transform_districts(districts: pd.DataFrame):
     districts["Postal Sector"] = districts["Postal Sector"].str.split(",").explode().str.strip()
@@ -44,22 +45,6 @@ def transform_resale_flats(resale_flats: str, districts: pd.DataFrame):
     resale_flats = resale_flats[resale_flats["district"] != "NIL"]
     return resale_flats
 
-# def transform_rental_flats(filename: str, districts: pd.DataFrame):
-#     rental_flats = pd.read_csv(DATA_PATH + filename)
-#     # Split 'rent_approval_date' into 'year' and 'month' columns
-#     rental_flats[['year', 'month']] = rental_flats['rent_approval_date'].str.split('-', expand=True)
-#     rental_flats.drop(columns=['rent_approval_date'], inplace=True)
-#     rental_flats["street_name_with_block"] = rental_flats["block"] + " " + rental_flats["street_name"]
-#     rental_flats[['postal', 'x', 'y', 'lat', 'lon']] = rental_flats['street_name_with_block'].apply(
-#         lambda address: get_info_from_street_name(address)
-#         ).tolist()
-#     # Use the existing get_district_from_postal function
-#     rental_flats["district"] = rental_flats["postal"].apply(lambda postal: get_district_from_postal(postal, districts))
-#     # Filter out rows with 'NIL' district
-#     rental_flats = rental_flats[rental_flats["district"] != "NIL"]
-
-#     return rental_flats
-
 def load_address_cache():
     try:
         addresses = pd.read_csv(DATA_PATH + ADDRESSES_CSV)
@@ -88,18 +73,3 @@ def transform_resale_flat_transactions_task(datagov_dict: Dict[str, str], distri
     data_path_resale_flats = DATA_PATH + "resale_flats_transformed.csv"
     resale_flats_df_transformed.to_csv(data_path_resale_flats, index=False)
     return data_path_resale_flats
-
-# @task
-# def transform_rental_flats_task(datagov_dict: Dict[str, str], districts_transformed_path: str):
-#     df_flat_rental_filename = datagov_dict["df_flat_rental"]
-#     districts_df_transformed = pd.read_csv(districts_transformed_path)
-
-#     print("Transforming rental flats...")
-#     df_rental_flats = transform_rental_flats(  
-#         df_flat_rental_filename, districts_df_transformed
-#     )
-
-#     data_path = "/opt/airflow/dags/data"
-#     data_path_rental_flats = data_path + "/rental_flats_transformed.csv"
-#     df_rental_flats.to_csv(data_path_rental_flats, index=False)
-#     return data_path_rental_flats
