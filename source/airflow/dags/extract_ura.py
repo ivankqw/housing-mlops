@@ -16,20 +16,6 @@ def get_token(access_key):
     data = res.read()
     return json.loads(data.decode("utf-8"))['Result']
 
-# def get_result(token, access_key, route):
-#     conn = http.client.HTTPSConnection("www.ura.gov.sg")
-#     payload = ""
-#     headers = {
-#         "AccessKey": access_key,
-#         "Token": token,
-#         "User-Agent": "PostmanRuntime/7.26.8",
-#     }
-#     conn.request("GET", route, payload, headers)
-#     res = conn.getresponse()
-#     data = res.read()
-#     data = json.loads(data.decode("utf-8"))['Result']
-#     return data
-
 def get_result(token, access_key, route):
     headers = {
         "AccessKey": access_key,

@@ -6,11 +6,10 @@ from cfg import DATA_PATH, ADDRESSES_CSV, ONEMAP_API_URL
 
 
 def read_districts():
-    print("DATAPATH", DATA_PATH + "districts.xlsx")
     return pd.read_excel(DATA_PATH + "districts.xlsx")
 
 def transform_districts(districts: pd.DataFrame):
-    districts["Postal Sector"] = districts["Postal Sector"].str.split(",").explode().str.strip()
+    districts["Postal Sector"] = districts["Postal Sector"].str.split(",").explode().reset_index(drop=True).str.strip()
     districts.drop(columns=["General Location"], inplace=True)
     districts.drop_duplicates(inplace=True)
     districts = districts[districts["Postal Sector"].str.len() == 2]
@@ -34,8 +33,10 @@ def get_district_from_postal(postal: str, districts: pd.DataFrame):
     return district
 
 
-def transform_resale_flats(resale_flats: str, districts: pd.DataFrame):
-    resale_flats["year"], resale_flats["month"] = resale_flats["month"].str.split("-").str
+def transform_resale_flats(resale_flats: pd.DataFrame, districts: pd.DataFrame):
+    resale_flats["month"] = resale_flats["month"].str.split("-")
+    resale_flats["year"] = resale_flats["month"].apply(lambda x: int(x[0]))
+    resale_flats["month"] = resale_flats["month"].apply(lambda x: int(x[1]))
     resale_flats = resale_flats[resale_flats["year"].astype(int) >= 2017]
     resale_flats.sort_values(by=["year", "month"], ascending=False, inplace=True)
     resale_flats["street_name_with_block"] = resale_flats["block"] + " " + resale_flats["street_name"]
@@ -68,7 +69,7 @@ def transform_districts_task():
 @task()
 def transform_resale_flat_transactions_task(datagov_dict: Dict[str, str], districts_transformed_path: str):
     districts_df_transformed = pd.read_csv(districts_transformed_path)
-    resale_flats_df = pd.read_csv(DATA_PATH + datagov_dict["df_resale_flat_transactions"])
+    resale_flats_df = pd.read_csv(datagov_dict["df_resale_flat_transactions"])
     resale_flats_df_transformed = transform_resale_flats(resale_flats_df, districts_df_transformed)
     data_path_resale_flats = DATA_PATH + "resale_flats_transformed.csv"
     resale_flats_df_transformed.to_csv(data_path_resale_flats, index=False)

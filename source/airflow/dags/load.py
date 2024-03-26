@@ -1,12 +1,13 @@
 from airflow.decorators import task
 from airflow.providers.postgres.hooks.postgres import PostgresHook
 import pandas as pd
-# from typing import 
+
 
 def insert_to_table(hook, table_name, df):
     print(f"Inserting {len(df)} rows into {table_name} table")
     hook.insert_rows(table=table_name, rows=df.itertuples(index=False))
     print(f"Inserted {len(df)} rows into {table_name} table")
+
 
 @task
 def load_singstat(data_path_singstat: str):
@@ -26,7 +27,7 @@ def load_singstat(data_path_singstat: str):
     df_cpi = pd.read_csv(data_path_singstat)
 
     insert_to_table(hook, 'cpi', df_cpi)
-    
+
     return
 
 
@@ -39,15 +40,20 @@ def load_ura(
         
         CREATE TABLE IF NOT EXISTS private_transactions (
             _id INT NOT NULL PRIMARY KEY,
-            area_sqm VARCHAR(255),
-            lease_date VARCHAR(255),
+            area DECIMAL(10,2),
+            floor_range VARCHAR(255),
+            number_of_units INT,
+            contract_date VARCHAR(255),
+            type_of_sale INT,
+            price INT,
             property_type VARCHAR(255),
             district INT,
-            area_sqft VARCHAR(255),
-            number_of_bedrooms DECIMAL(10,2),
-            rental INT,
+            type_of_area VARCHAR(255),
+            tenure VARCHAR(255),
+            nett_price VARCHAR(255),
             street_name VARCHAR(255),
             project_name VARCHAR(255),
+            market_segment VARCHAR(255),
             month INT,
             year INT
         );
@@ -60,6 +66,7 @@ def load_ura(
     insert_to_table(hook, 'private_transactions', df_private_transactions)
 
     return
+
 
 @task
 def load_datagovsg(
@@ -124,7 +131,8 @@ def load_datagovsg(
     hook = PostgresHook(postgres_conn_id='bt4301_postgres')
     hook.run(create_table_sql)
 
-    df_resale_flat_transactions = pd.read_csv(data_path_resale_flat_transactions)
+    df_resale_flat_transactions = pd.read_csv(
+        data_path_resale_flat_transactions)
     df_hdb_information = pd.read_csv(data_path_hdb_information)
 
     insert_to_table(hook, 'resale_flats', df_resale_flat_transactions)
