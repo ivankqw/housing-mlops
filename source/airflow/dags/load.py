@@ -78,54 +78,54 @@ def load_datagovsg(
         DROP TABLE IF EXISTS resale_flats;
 
         CREATE TABLE IF NOT EXISTS hdb_information (
-            year_completed INT,
-            multigen_sold INT,
-            bldg_contract_town VARCHAR(255),
-            multistorey_carpark VARCHAR(255),
-            street VARCHAR(255),
-            total_dwelling_units INT,
+            _id INT NOT NULL PRIMARY KEY,
             blk_no VARCHAR(255),
-            exec_sold INT,
+            street VARCHAR(255),
             max_floor_lvl INT,
+            year_completed INT,
             residential VARCHAR(255),
-            one_room_sold INT,
-            precinct_pavilion VARCHAR(255),
-            other_room_rental INT,
-            five_room_sold INT,
-            three_room_sold INT,
             commercial VARCHAR(255),
-            four_room_sold INT,
-            miscellaneous VARCHAR(255),
-            studio_apartment_sold INT,
-            two_room_rental INT,
-            two_room_sold INT,
-            one_room_rental INT,
-            three_room_rental INT,
             market_hawker VARCHAR(255),
-            _id INT NOT NULL PRIMARY KEY
+            miscellaneous VARCHAR(255),
+            multistorey_carpark VARCHAR(255),
+            precinct_pavilion VARCHAR(255),
+            bldg_contract_town VARCHAR(255),
+            total_dwelling_units INT,
+            one_room_sold INT,
+            two_room_sold INT,
+            three_room_sold INT,
+            four_room_sold INT,
+            five_room_sold INT,
+            exec_sold INT,
+            multigen_sold INT,
+            studio_apartment_sold INT,
+            one_room_rental INT,
+            two_room_rental INT,
+            three_room_rental INT,
+            other_room_rental INT
         );
                
         CREATE TABLE IF NOT EXISTS resale_flats (
+            _id INT NOT NULL PRIMARY KEY,
+            month INT,
             town VARCHAR(255),
             flat_type VARCHAR(255),
-            flat_model VARCHAR(255),
-            floor_area_sqm FLOAT,
-            street_name VARCHAR(255),
-            resale_price FLOAT,
-            month INT,
-            remaining_lease VARCHAR(255),
-            lease_commence_date INT,
-            storey_range VARCHAR(255),
-            _id INT NOT NULL PRIMARY KEY,
             block VARCHAR(255),
+            street_name VARCHAR(255),
+            storey_range VARCHAR(255),
+            floor_area_sqm FLOAT,
+            flat_model VARCHAR(255),
+            lease_commence_date INT,
+            remaining_lease VARCHAR(255),
+            resale_price FLOAT,
             year INT,
             street_name_with_block VARCHAR(255),
-            postal INT,
+            postal VARCHAR(255),
             x_coord VARCHAR(255),
             y_coord VARCHAR(255),
             latitude VARCHAR(255),
             longitude VARCHAR(255),
-            district INT
+            district VARCHAR(255)
         );
         """
     hook = PostgresHook(postgres_conn_id='bt4301_postgres')
@@ -135,5 +135,6 @@ def load_datagovsg(
         data_path_resale_flat_transactions)
     df_hdb_information = pd.read_csv(data_path_hdb_information)
 
-    insert_to_table(hook, 'resale_flats', df_resale_flat_transactions)
     insert_to_table(hook, 'hdb_information', df_hdb_information)
+    insert_to_table(hook, 'resale_flats', df_resale_flat_transactions)
+    
