@@ -1,0 +1,1 @@
+docker run -p 8002:8080 resale_price_prediction_xgboost
