@@ -27,7 +27,11 @@ mlflow.set_tracking_uri('http://localhost:8000')
 docker run -p 5000:5000 <image_id> <run_id>
 ```
 
-**For ease of development, you can run the shell script `model_server.sh` to start the MLFlow server and the docker image.**
+**For ease of development, you can run the shell script `model_server.sh` to start the inference server**
+
+```bash
+source ./model_server.sh
+```
 
 ## Testing the served model
 
