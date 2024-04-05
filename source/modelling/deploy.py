@@ -40,16 +40,16 @@ if __name__ == "__main__":
     print("Building and running dev server")
     build_model_server_image(model_uri, image_name)
     run_model_server_image(image_name, port)
-    test_dev_server()
+    # test_dev_server()
 
-    _ = load_dotenv("prod.env")
-    model_uri = os.getenv("MODEL_URI")
-    image_name = os.getenv("IMAGE_NAME")
-    port = int(os.getenv("PORT"))
-    assert model_uri, "MODEL_URI not found in prod environment"
-    assert image_name, "IMAGE_NAME not found in prod environment"
-    assert port, "PORT not found in prod environment"
+    # _ = load_dotenv("prod.env")
+    # model_uri = os.getenv("MODEL_URI")
+    # image_name = os.getenv("IMAGE_NAME")
+    # port = int(os.getenv("PORT"))
+    # assert model_uri, "MODEL_URI not found in prod environment"
+    # assert image_name, "IMAGE_NAME not found in prod environment"
+    # assert port, "PORT not found in prod environment"
 
-    print("Building and running prod server")
-    build_model_server_image(model_uri, image_name)
-    run_model_server_image(image_name, port)
+    # print("Building and running prod server")
+    # build_model_server_image(model_uri, image_name)
+    # run_model_server_image(image_name, port)

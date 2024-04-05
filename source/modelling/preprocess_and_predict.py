@@ -14,8 +14,8 @@ DATA_PATH = '../airflow/dags/data/resale_flats_transformed.csv'
 CPI_PATH = '../airflow/dags/data/cpi_with_lag_sma_ema.csv'
 SIBOR_PATH = '../airflow/dags/data/sibor_sora.csv'
 INVOCATION_ENDPOINT = 'http://localhost:8002/invocations'
-FEATURE_SCALER_PATH = 'feature_scaler.save'
-TARGET_SCALER_PATH = 'target_scaler.save'
+FEATURE_SCALER_PATH = '_scalers/feature_scaler.save'
+TARGET_SCALER_PATH = '_scalers/target_scaler.save'
 NUM_COLS = ['floor_area_sqm',
                 'remaining_lease',
                 'year',
