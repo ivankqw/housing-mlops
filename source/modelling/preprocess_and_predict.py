@@ -184,3 +184,6 @@ if __name__ == "__main__":
     prediction = target_scaler.inverse_transform(prediction) # throws error
     
     print(f"Predicted price: ${prediction[0][0]:,.2f}")
+    # features
+    # output
+    # time at which prediction was made
