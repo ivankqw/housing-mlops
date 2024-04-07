@@ -1,0 +1,14 @@
+aliases: []
+creation_timestamp: 1711718550605
+current_stage: None
+description: ''
+last_updated_timestamp: 1711718550605
+name: LightGBMResalePricePrediction
+run_id: b44e97e862f145f19a1f1838f7a79610
+run_link: ''
+source: mlflow-artifacts:/0/b44e97e862f145f19a1f1838f7a79610/artifacts/model
+status: READY
+status_message: null
+storage_location: mlflow-artifacts:/0/b44e97e862f145f19a1f1838f7a79610/artifacts/model
+user_id: null
+version: 1

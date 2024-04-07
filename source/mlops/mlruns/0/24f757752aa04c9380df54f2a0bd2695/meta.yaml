@@ -1,0 +1,15 @@
+artifact_uri: mlflow-artifacts:/0/24f757752aa04c9380df54f2a0bd2695/artifacts
+end_time: 1711718083578
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+run_id: 24f757752aa04c9380df54f2a0bd2695
+run_name: redolent-steed-375
+run_uuid: 24f757752aa04c9380df54f2a0bd2695
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1711718075744
+status: 4
+tags: []
+user_id: ivankoh
