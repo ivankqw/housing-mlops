@@ -26,8 +26,8 @@ def test_dev_server(port: int):
     print("Testing dev server")
     
     predictor = Predictor(8002)
-    predictor.predict_as_csv('example.csv')
-    
+    df = predictor.predict_csv('example.csv')
+
     #TODO make this bandy
     raise NotImplementedError("Test not implemented")
 

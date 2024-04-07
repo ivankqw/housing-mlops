@@ -7,6 +7,8 @@ from typing import Tuple
 import requests
 import json
 import warnings
+import aiohttp
+import asyncio
 warnings.filterwarnings('ignore')
 
 # GLOBALS
@@ -51,6 +53,16 @@ class Predictor:
         return cpi_row, sibor_row
 
     @staticmethod
+    def get_latest_relevant_external_data(cpi_data: pd.DataFrame, sibor_data: pd.DataFrame) -> Tuple[pd.DataFrame, pd.DataFrame]:
+        """Get the latest relevant CPI and SIBOR data."""
+        cpi_row = cpi_data.iloc[-1]
+        sibor_row = sibor_data.iloc[-1]
+        # convert to dataframe
+        cpi_row = pd.DataFrame(cpi_row).T
+        sibor_row = pd.DataFrame(sibor_row).T
+        return cpi_row, sibor_row
+
+    @staticmethod
     def convert_remaining_lease(years: int, months: int) -> int:
         """Convert remaining lease to total months."""
         return years * 12 + months
@@ -60,9 +72,18 @@ class Predictor:
         cpi_row, sibor_row = self.find_relevant_external_data(
             input_data['year'].iloc[0], input_data['month'].iloc[0], 1, self.cpi_data, self.sibor_data)
 
+        for column in cpi_row.columns:
+            try:
+                input_data[column] = cpi_row[column].values[0]
+            except IndexError:
+                cpi_row, sibor_row = self.get_latest_relevant_external_data(
+                    self.cpi_data, self.sibor_data)
+                break
+
         # Merge CPI and SIBOR data with input_data
         for column in cpi_row.columns:
             input_data[column] = cpi_row[column].values[0]
+
         for column in sibor_row.columns:
             input_data[column] = sibor_row[column].values[0]
 
@@ -114,7 +135,7 @@ class Predictor:
         print(f"Predicted price: ${predicted_price:.2f}")
         return predicted_price
 
-    def predict_as_csv(self, csv_path: str) -> pd.DataFrame:
+    def predict_csv(self, csv_path: str) -> pd.DataFrame:
         """Predict resale prices for a CSV file of input features."""
         input_data = pd.read_csv(csv_path)
         predictions = []
@@ -126,3 +147,62 @@ class Predictor:
 
         input_data['predicted_price'] = predictions
         return input_data
+
+    def predict_df(self, input_data: pd.DataFrame) -> pd.DataFrame:
+        """Predict resale prices for a DataFrame of input features."""
+        predictions = []
+
+        for _, row in input_data.iterrows():
+            row_dict = row.to_dict()
+            prediction = self.predict(**row_dict)
+            predictions.append(prediction)
+
+        input_data['predicted_price'] = predictions
+        return input_data
+
+    async def apredict(self, **kwargs) -> float:
+        """Asynchronously predict the resale price for a given set of features."""
+        input_data = pd.DataFrame([kwargs])
+        input_data_preprocessed = self.preprocess_input(input_data)
+
+        # Adjusting to use 'dataframe_split' format for prediction
+        data = input_data_preprocessed.to_dict(orient='split')
+        del data['index']  # Remove 'index' if present
+        formatted_data = {'dataframe_split': data}
+        headers = {'Content-Type': 'application/json'}
+
+        async with aiohttp.ClientSession() as session:
+            async with session.post(f'http://localhost:{self.port}/invocations', headers=headers, json=formatted_data) as response:
+                if response.status == 200:
+                    prediction = await response.json()
+                else:
+                    raise Exception(f"Prediction request failed with status code {response.status} and message: {await response.text()}")
+
+        # Inverse transform the predicted price
+        predicted_price = self.target_scaler.inverse_transform(
+            np.array(prediction['predictions']).reshape(-1, 1))[0][0]
+
+        print(f"Predicted price: ${predicted_price:.2f}")
+        return predicted_price
+
+    async def apredict_csv(self, csv_path: str) -> pd.DataFrame:
+        """Asynchronously predict resale prices for a CSV file of input features."""
+        input_data = pd.read_csv(csv_path)
+        predictions = []
+
+        tasks = [self.apredict(**row.to_dict())
+                 for _, row in input_data.iterrows()]
+        predictions = await asyncio.gather(*tasks)
+
+        input_data['predicted_price'] = predictions
+        return input_data
+
+    async def apredict_df(self, input_data: pd.DataFrame) -> pd.DataFrame:
+        """Asynchronously predict resale prices for a DataFrame of input features."""
+        tasks = [self.apredict(**row.to_dict())
+                 for _, row in input_data.iterrows()]
+        predictions = await asyncio.gather(*tasks)
+
+        input_data['predicted_price'] = predictions
+        return input_data
+
