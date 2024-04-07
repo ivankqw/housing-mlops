@@ -1,7 +1,3 @@
-# TODO 
-# take in a part of the actual data we have, run predictions for these then store everything
-# (features, pred, actual, time) somewhere for me to use
-
 import numpy as np
 import pandas as pd
 from sklearn.preprocessing import StandardScaler
@@ -104,7 +100,7 @@ class Predictor:
         headers = {'Content-Type': 'application/json'}
         response = requests.post(
             f'http://localhost:{self.port}/invocations', headers=headers, data=json.dumps(formatted_data))
-        
+
         if response.status_code == 200:
             prediction = response.json()
         else:

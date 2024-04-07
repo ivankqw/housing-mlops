@@ -60,7 +60,6 @@ def preprocess_input(input_data: pd.DataFrame, scaler: StandardScaler, cpi_row: 
     input_data['sale_date'] = datetime(
         input_data['year'], input_data['month'], 1)
 
-    # TODO: sus
     # Load the dummies from the training set
     train_set = pd.read_csv(DATA_PATH)
     categorical_vars = ['flat_type', 'storey_range',
