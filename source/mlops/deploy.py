@@ -1,6 +1,7 @@
 import os
 import mlflow
 from dotenv import load_dotenv
+from predictor import Predictor
 
 
 def build_model_server_image(model_uri: str, image_name: str):
@@ -23,6 +24,10 @@ def run_model_server_image(image_name: str, port: int, mlflow_default_port: int 
 
 def test_dev_server(port: int):
     print("Testing dev server")
+    
+    predictor = Predictor(8002)
+    predictor.predict_as_csv('example.csv')
+    
     #TODO make this bandy
     raise NotImplementedError("Test not implemented")
 

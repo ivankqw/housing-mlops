@@ -1,0 +1,4 @@
+year,month,floor_area_sqm,remaining_lease_years,remaining_lease_months,flat_type,storey_range,flat_model,district
+2023,4,68,95,0,3 ROOM,04 TO 06,Model A,15
+2023,4,95,92,0,4 ROOM,10 TO 12,Model A,9
+2023,4,120,89,0,5 ROOM,01 TO 03,Improved,22
