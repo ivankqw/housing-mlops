@@ -18,18 +18,26 @@ def build_model_server_image(model_uri: str, image_name: str):
 
 
 def run_model_server_image(image_name: str, port: int, mlflow_default_port: int = 8080):
+    container_name = f"{image_name}-container"
+    os.system(f"docker stop {container_name}")
+    os.system(f"docker rm {container_name}")
     print(f"Running docker image: {image_name}")
-    os.system(f"docker run -p {port}:{mlflow_default_port} {image_name}")
+    os.system(f"docker run -d --name {container_name} -p {port}:{mlflow_default_port} {image_name}")
 
 
-def test_dev_server(port: int):
+def test_dev_server(port: int) -> bool:
     print("Testing dev server")
-    
-    predictor = Predictor(8002)
-    df = predictor.predict_csv('example.csv')
 
-    #TODO make this bandy
-    raise NotImplementedError("Test not implemented")
+    test_files = ["test_data_type.csv",
+                  "test_extreme_values.csv", "test_null_values.csv"]
+    predictor = Predictor(8002)
+    for test_file in test_files:
+        try:
+            predictor.predict_csv(test_file)
+        except Exception as e:
+            print(f"Failed to predict for {test_file}: {e}")
+            raise e
+    return True
 
 
 if __name__ == "__main__":
@@ -45,7 +53,7 @@ if __name__ == "__main__":
     print("Building and running dev server")
     build_model_server_image(model_uri, image_name)
     run_model_server_image(image_name, port)
-    # test_dev_server()
+    test_dev_server(port=port)
 
     # _ = load_dotenv("../prod.env")
     # model_uri = os.getenv("MODEL_URI")
