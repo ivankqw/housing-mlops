@@ -10,9 +10,9 @@ import requests
 import json
 
 # GLOBALS
-DATA_PATH = '../airflow/dags/data/resale_flats_transformed.csv'
-CPI_PATH = '../airflow/dags/data/cpi_with_lag_sma_ema.csv'
-SIBOR_PATH = '../airflow/dags/data/sibor_sora.csv'
+DATA_PATH = '../../data/resale_flats_transformed.csv'
+CPI_PATH = '../../data/cpi_with_lag_sma_ema.csv'
+SIBOR_PATH = '../../data/sibor_sora.csv'
 FEATURE_SCALER_PATH = '_scalers/feature_scaler.save'
 TARGET_SCALER_PATH = '_scalers/target_scaler.save'
 NUM_COLS = ['floor_area_sqm', 'remaining_lease', 'year', 'cpi', 'cpi_lag1',

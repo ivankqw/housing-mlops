@@ -1,0 +1,188 @@
+artifact_path: model
+flavors:
+  python_function:
+    env:
+      conda: conda.yaml
+      virtualenv: python_env.yaml
+    loader_module: mlflow.sklearn
+    model_path: model.pkl
+    predict_fn: predict
+    python_version: 3.9.12
+  sklearn:
+    code: null
+    pickled_model: model.pkl
+    serialization_format: cloudpickle
+    sklearn_version: 1.0.2
+mlflow_version: 2.11.3
+model_size_bytes: 4522541
+model_uuid: dd4510b8b720469c9c8ca7fa57a24f3c
+run_id: 4d567540f2794ef69840d88b70f9b451
+signature:
+  inputs: '[{"type": "double", "name": "floor_area_sqm", "required": true}, {"type":
+    "double", "name": "remaining_lease", "required": true}, {"type": "double", "name":
+    "year", "required": true}, {"type": "double", "name": "lat", "required": true},
+    {"type": "double", "name": "lon", "required": true}, {"type": "integer", "name":
+    "flat_type_1 ROOM", "required": true}, {"type": "integer", "name": "flat_type_2
+    ROOM", "required": true}, {"type": "integer", "name": "flat_type_3 ROOM", "required":
+    true}, {"type": "integer", "name": "flat_type_4 ROOM", "required": true}, {"type":
+    "integer", "name": "flat_type_5 ROOM", "required": true}, {"type": "integer",
+    "name": "flat_type_EXECUTIVE", "required": true}, {"type": "integer", "name":
+    "flat_type_MULTI-GENERATION", "required": true}, {"type": "integer", "name": "storey_range_01
+    TO 03", "required": true}, {"type": "integer", "name": "storey_range_04 TO 06",
+    "required": true}, {"type": "integer", "name": "storey_range_07 TO 09", "required":
+    true}, {"type": "integer", "name": "storey_range_10 TO 12", "required": true},
+    {"type": "integer", "name": "storey_range_13 TO 15", "required": true}, {"type":
+    "integer", "name": "storey_range_16 TO 18", "required": true}, {"type": "integer",
+    "name": "storey_range_19 TO 21", "required": true}, {"type": "integer", "name":
+    "storey_range_22 TO 24", "required": true}, {"type": "integer", "name": "storey_range_25
+    TO 27", "required": true}, {"type": "integer", "name": "storey_range_28 TO 30",
+    "required": true}, {"type": "integer", "name": "storey_range_31 TO 33", "required":
+    true}, {"type": "integer", "name": "storey_range_34 TO 36", "required": true},
+    {"type": "integer", "name": "storey_range_37 TO 39", "required": true}, {"type":
+    "integer", "name": "storey_range_40 TO 42", "required": true}, {"type": "integer",
+    "name": "storey_range_43 TO 45", "required": true}, {"type": "integer", "name":
+    "storey_range_46 TO 48", "required": true}, {"type": "integer", "name": "storey_range_49
+    TO 51", "required": true}, {"type": "integer", "name": "flat_model_2-room", "required":
+    true}, {"type": "integer", "name": "flat_model_3Gen", "required": true}, {"type":
+    "integer", "name": "flat_model_Adjoined flat", "required": true}, {"type": "integer",
+    "name": "flat_model_Apartment", "required": true}, {"type": "integer", "name":
+    "flat_model_DBSS", "required": true}, {"type": "integer", "name": "flat_model_Improved",
+    "required": true}, {"type": "integer", "name": "flat_model_Improved-Maisonette",
+    "required": true}, {"type": "integer", "name": "flat_model_Maisonette", "required":
+    true}, {"type": "integer", "name": "flat_model_Model A", "required": true}, {"type":
+    "integer", "name": "flat_model_Model A-Maisonette", "required": true}, {"type":
+    "integer", "name": "flat_model_Model A2", "required": true}, {"type": "integer",
+    "name": "flat_model_Multi Generation", "required": true}, {"type": "integer",
+    "name": "flat_model_New Generation", "required": true}, {"type": "integer", "name":
+    "flat_model_Premium Apartment", "required": true}, {"type": "integer", "name":
+    "flat_model_Premium Apartment Loft", "required": true}, {"type": "integer", "name":
+    "flat_model_Premium Maisonette", "required": true}, {"type": "integer", "name":
+    "flat_model_Simplified", "required": true}, {"type": "integer", "name": "flat_model_Standard",
+    "required": true}, {"type": "integer", "name": "flat_model_Terrace", "required":
+    true}, {"type": "integer", "name": "flat_model_Type S1", "required": true}, {"type":
+    "integer", "name": "flat_model_Type S2", "required": true}, {"type": "integer",
+    "name": "district_1.0", "required": true}, {"type": "integer", "name": "district_2.0",
+    "required": true}, {"type": "integer", "name": "district_3.0", "required": true},
+    {"type": "integer", "name": "district_4.0", "required": true}, {"type": "integer",
+    "name": "district_5.0", "required": true}, {"type": "integer", "name": "district_7.0",
+    "required": true}, {"type": "integer", "name": "district_8.0", "required": true},
+    {"type": "integer", "name": "district_10.0", "required": true}, {"type": "integer",
+    "name": "district_11.0", "required": true}, {"type": "integer", "name": "district_12.0",
+    "required": true}, {"type": "integer", "name": "district_13.0", "required": true},
+    {"type": "integer", "name": "district_14.0", "required": true}, {"type": "integer",
+    "name": "district_15.0", "required": true}, {"type": "integer", "name": "district_16.0",
+    "required": true}, {"type": "integer", "name": "district_17.0", "required": true},
+    {"type": "integer", "name": "district_18.0", "required": true}, {"type": "integer",
+    "name": "district_19.0", "required": true}, {"type": "integer", "name": "district_20.0",
+    "required": true}, {"type": "integer", "name": "district_21.0", "required": true},
+    {"type": "integer", "name": "district_22.0", "required": true}, {"type": "integer",
+    "name": "district_23.0", "required": true}, {"type": "integer", "name": "district_25.0",
+    "required": true}, {"type": "integer", "name": "district_27.0", "required": true},
+    {"type": "integer", "name": "district_28.0", "required": true}, {"type": "integer",
+    "name": "month_1", "required": true}, {"type": "integer", "name": "month_2", "required":
+    true}, {"type": "integer", "name": "month_3", "required": true}, {"type": "integer",
+    "name": "month_4", "required": true}, {"type": "integer", "name": "month_5", "required":
+    true}, {"type": "integer", "name": "month_6", "required": true}, {"type": "integer",
+    "name": "month_7", "required": true}, {"type": "integer", "name": "month_8", "required":
+    true}, {"type": "integer", "name": "month_9", "required": true}, {"type": "integer",
+    "name": "month_10", "required": true}, {"type": "integer", "name": "month_11",
+    "required": true}, {"type": "integer", "name": "month_12", "required": true},
+    {"type": "double", "name": "cpi", "required": true}, {"type": "double", "name":
+    "cpi_lag1", "required": true}, {"type": "double", "name": "cpi_lag3", "required":
+    true}, {"type": "double", "name": "cpi_lag6", "required": true}, {"type": "double",
+    "name": "cpi_lag12", "required": true}, {"type": "double", "name": "cpi_sma3",
+    "required": true}, {"type": "double", "name": "cpi_sma6", "required": true}, {"type":
+    "double", "name": "cpi_sma12", "required": true}, {"type": "double", "name": "cpi_ema3",
+    "required": true}, {"type": "double", "name": "cpi_ema6", "required": true}, {"type":
+    "double", "name": "cpi_ema12", "required": true}, {"type": "double", "name": "SIBOR
+    1M", "required": false}, {"type": "double", "name": "SIBOR 3M", "required": false},
+    {"type": "double", "name": "SIBOR 6M", "required": false}, {"type": "double",
+    "name": "SIBOR 12M", "required": false}, {"type": "double", "name": "SOR ON",
+    "required": false}, {"type": "double", "name": "SOR 1M", "required": false}, {"type":
+    "double", "name": "SOR 3M", "required": false}, {"type": "double", "name": "SOR
+    6M", "required": false}]'
+  outputs: '[{"type": "double", "name": "floor_area_sqm", "required": true}, {"type":
+    "double", "name": "remaining_lease", "required": true}, {"type": "double", "name":
+    "year", "required": true}, {"type": "double", "name": "lat", "required": true},
+    {"type": "double", "name": "lon", "required": true}, {"type": "integer", "name":
+    "flat_type_1 ROOM", "required": true}, {"type": "integer", "name": "flat_type_2
+    ROOM", "required": true}, {"type": "integer", "name": "flat_type_3 ROOM", "required":
+    true}, {"type": "integer", "name": "flat_type_4 ROOM", "required": true}, {"type":
+    "integer", "name": "flat_type_5 ROOM", "required": true}, {"type": "integer",
+    "name": "flat_type_EXECUTIVE", "required": true}, {"type": "integer", "name":
+    "flat_type_MULTI-GENERATION", "required": true}, {"type": "integer", "name": "storey_range_01
+    TO 03", "required": true}, {"type": "integer", "name": "storey_range_04 TO 06",
+    "required": true}, {"type": "integer", "name": "storey_range_07 TO 09", "required":
+    true}, {"type": "integer", "name": "storey_range_10 TO 12", "required": true},
+    {"type": "integer", "name": "storey_range_13 TO 15", "required": true}, {"type":
+    "integer", "name": "storey_range_16 TO 18", "required": true}, {"type": "integer",
+    "name": "storey_range_19 TO 21", "required": true}, {"type": "integer", "name":
+    "storey_range_22 TO 24", "required": true}, {"type": "integer", "name": "storey_range_25
+    TO 27", "required": true}, {"type": "integer", "name": "storey_range_28 TO 30",
+    "required": true}, {"type": "integer", "name": "storey_range_31 TO 33", "required":
+    true}, {"type": "integer", "name": "storey_range_34 TO 36", "required": true},
+    {"type": "integer", "name": "storey_range_37 TO 39", "required": true}, {"type":
+    "integer", "name": "storey_range_40 TO 42", "required": true}, {"type": "integer",
+    "name": "storey_range_43 TO 45", "required": true}, {"type": "integer", "name":
+    "storey_range_46 TO 48", "required": true}, {"type": "integer", "name": "storey_range_49
+    TO 51", "required": true}, {"type": "integer", "name": "flat_model_2-room", "required":
+    true}, {"type": "integer", "name": "flat_model_3Gen", "required": true}, {"type":
+    "integer", "name": "flat_model_Adjoined flat", "required": true}, {"type": "integer",
+    "name": "flat_model_Apartment", "required": true}, {"type": "integer", "name":
+    "flat_model_DBSS", "required": true}, {"type": "integer", "name": "flat_model_Improved",
+    "required": true}, {"type": "integer", "name": "flat_model_Improved-Maisonette",
+    "required": true}, {"type": "integer", "name": "flat_model_Maisonette", "required":
+    true}, {"type": "integer", "name": "flat_model_Model A", "required": true}, {"type":
+    "integer", "name": "flat_model_Model A-Maisonette", "required": true}, {"type":
+    "integer", "name": "flat_model_Model A2", "required": true}, {"type": "integer",
+    "name": "flat_model_Multi Generation", "required": true}, {"type": "integer",
+    "name": "flat_model_New Generation", "required": true}, {"type": "integer", "name":
+    "flat_model_Premium Apartment", "required": true}, {"type": "integer", "name":
+    "flat_model_Premium Apartment Loft", "required": true}, {"type": "integer", "name":
+    "flat_model_Premium Maisonette", "required": true}, {"type": "integer", "name":
+    "flat_model_Simplified", "required": true}, {"type": "integer", "name": "flat_model_Standard",
+    "required": true}, {"type": "integer", "name": "flat_model_Terrace", "required":
+    true}, {"type": "integer", "name": "flat_model_Type S1", "required": true}, {"type":
+    "integer", "name": "flat_model_Type S2", "required": true}, {"type": "integer",
+    "name": "district_1.0", "required": true}, {"type": "integer", "name": "district_2.0",
+    "required": true}, {"type": "integer", "name": "district_3.0", "required": true},
+    {"type": "integer", "name": "district_4.0", "required": true}, {"type": "integer",
+    "name": "district_5.0", "required": true}, {"type": "integer", "name": "district_7.0",
+    "required": true}, {"type": "integer", "name": "district_8.0", "required": true},
+    {"type": "integer", "name": "district_10.0", "required": true}, {"type": "integer",
+    "name": "district_11.0", "required": true}, {"type": "integer", "name": "district_12.0",
+    "required": true}, {"type": "integer", "name": "district_13.0", "required": true},
+    {"type": "integer", "name": "district_14.0", "required": true}, {"type": "integer",
+    "name": "district_15.0", "required": true}, {"type": "integer", "name": "district_16.0",
+    "required": true}, {"type": "integer", "name": "district_17.0", "required": true},
+    {"type": "integer", "name": "district_18.0", "required": true}, {"type": "integer",
+    "name": "district_19.0", "required": true}, {"type": "integer", "name": "district_20.0",
+    "required": true}, {"type": "integer", "name": "district_21.0", "required": true},
+    {"type": "integer", "name": "district_22.0", "required": true}, {"type": "integer",
+    "name": "district_23.0", "required": true}, {"type": "integer", "name": "district_25.0",
+    "required": true}, {"type": "integer", "name": "district_27.0", "required": true},
+    {"type": "integer", "name": "district_28.0", "required": true}, {"type": "integer",
+    "name": "month_1", "required": true}, {"type": "integer", "name": "month_2", "required":
+    true}, {"type": "integer", "name": "month_3", "required": true}, {"type": "integer",
+    "name": "month_4", "required": true}, {"type": "integer", "name": "month_5", "required":
+    true}, {"type": "integer", "name": "month_6", "required": true}, {"type": "integer",
+    "name": "month_7", "required": true}, {"type": "integer", "name": "month_8", "required":
+    true}, {"type": "integer", "name": "month_9", "required": true}, {"type": "integer",
+    "name": "month_10", "required": true}, {"type": "integer", "name": "month_11",
+    "required": true}, {"type": "integer", "name": "month_12", "required": true},
+    {"type": "double", "name": "cpi", "required": false}, {"type": "double", "name":
+    "cpi_lag1", "required": false}, {"type": "double", "name": "cpi_lag3", "required":
+    false}, {"type": "double", "name": "cpi_lag6", "required": false}, {"type": "double",
+    "name": "cpi_lag12", "required": false}, {"type": "double", "name": "cpi_sma3",
+    "required": false}, {"type": "double", "name": "cpi_sma6", "required": false},
+    {"type": "double", "name": "cpi_sma12", "required": false}, {"type": "double",
+    "name": "cpi_ema3", "required": false}, {"type": "double", "name": "cpi_ema6",
+    "required": false}, {"type": "double", "name": "cpi_ema12", "required": false},
+    {"type": "double", "name": "SIBOR 1M", "required": false}, {"type": "double",
+    "name": "SIBOR 3M", "required": false}, {"type": "double", "name": "SIBOR 6M",
+    "required": false}, {"type": "double", "name": "SIBOR 12M", "required": false},
+    {"type": "double", "name": "SOR ON", "required": false}, {"type": "double", "name":
+    "SOR 1M", "required": false}, {"type": "double", "name": "SOR 3M", "required":
+    false}, {"type": "double", "name": "SOR 6M", "required": false}]'
+  params: null
+utc_time_created: '2024-04-09 08:00:32.372914'
