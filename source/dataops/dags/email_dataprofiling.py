@@ -15,12 +15,12 @@ import matplotlib.pyplot as plt
 from dataops import data_quality_report_numerical, data_quality_report_categorical
 from typing import Callable
 
-# fill in your own email address and password
+# fill in your own email address
 smtp_server = "smtp.gmail.com"
 smtp_port = 587
-smtp_username = "your_email@gmail.com"
-smtp_password = "app_password"
-sender_email = "your_email@gmail.com"
+smtp_username = "bt4301group8@gmail.com"
+smtp_password = "kbkpubaotefnlxpi"
+sender_email = "bt4301group8@gmail.com"
 receiver_email = "your_email@gmail.com"
 
 
