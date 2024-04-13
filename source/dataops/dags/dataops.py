@@ -1,4 +1,6 @@
 import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
 
 
 def set_default_pandas_options(
@@ -73,3 +75,46 @@ def data_quality_report_categorical(df):
     else:
 
         return None
+
+
+def categorical_charts(df: pd.DataFrame, df_name: str) -> str:
+    cat_cols = list(df.select_dtypes(include="object").columns)
+    selected_cols = []
+    for col in cat_cols:
+        if df[col].nunique() <= 30:
+            selected_cols.append(col)
+    num_cols = 1
+    num_rows = (len(selected_cols) + num_cols - 1) // num_cols
+    plt.figure(figsize=(20, 5 * num_rows))
+    plt.suptitle("Categorical Columns Distribution", fontsize=16, y=1.005)
+    for idx, col in enumerate(selected_cols, start=1):
+        plt.subplot(num_rows, num_cols, idx)
+        sns.countplot(x=df[col])
+        plt.title(col + " distribution")
+        plt.xticks(rotation=45)
+
+    chart_path = "../charts/cat_charts_" + df_name + ".png"
+    plt.tight_layout()
+    plt.savefig(chart_path)
+    plt.close()
+    return chart_path
+
+
+def numerical_charts(df: pd.DataFrame, df_name: str) -> str:
+    numerical_cols = list(df.select_dtypes(exclude="object").columns)
+    num_cols = 1
+    num_rows = (len(numerical_cols) + num_cols - 1) // num_cols
+    plt.figure(figsize=(20, 5 * num_rows))
+    plt.suptitle(df_name + " Numerical Columns Distribution", fontsize=16, y=1.005)
+    for idx, col in enumerate(numerical_cols, start=1):
+        plt.subplot(num_rows, num_cols, idx)
+        sns.histplot(x=df[col], kde=True)
+        plt.title(col + " distribution")
+        plt.xticks(rotation=45)
+    plt.tight_layout()
+
+    chart_path = "../charts/num_charts_" + df_name + ".png"
+    plt.tight_layout()
+    plt.savefig(chart_path)
+    plt.close()
+    return chart_path

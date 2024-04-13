@@ -12,7 +12,12 @@ from email.mime.image import MIMEImage
 import pandas as pd
 import matplotlib.pyplot as plt
 
-from dataops import data_quality_report_numerical, data_quality_report_categorical
+from dataops import (
+    data_quality_report_numerical,
+    data_quality_report_categorical,
+    categorical_charts,
+    numerical_charts,
+)
 from typing import Callable
 
 # fill in your own email address
@@ -64,6 +69,18 @@ def send_email(msg: MIMEMultipart) -> None:
     return
 
 
+def add_image(
+    msg: MIMEMultipart, data_path: str, fn: Callable, chart_name: str
+) -> MIMEMultipart:
+    data = pd.read_csv(data_path)
+    image_path = fn(data, chart_name)
+    with open(image_path, "rb") as f:
+        img = MIMEImage(f.read())
+        img.add_header("Content-Disposition", "attachment", filename=image_path)
+        msg.attach(img)
+        return msg
+
+
 def send_data_profiling_email(data_path: str) -> None:
     text = text_email()
     report1 = add_report(
@@ -72,5 +89,7 @@ def send_data_profiling_email(data_path: str) -> None:
     report2 = add_report(
         report1, data_path, data_quality_report_categorical, "data_quality_report_2"
     )
-    send_email(report2)
+    chart1 = add_image(report2, data_path, numerical_charts, data_path[:-4])
+    chart2 = add_image(chart1, data_path, categorical_charts, data_path[:-4])
+    send_email(chart2)
     return
