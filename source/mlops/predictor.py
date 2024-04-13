@@ -7,8 +7,6 @@ from typing import Tuple
 import requests
 import json
 import warnings
-import aiohttp
-import asyncio
 warnings.filterwarnings('ignore')
 
 # GLOBALS
@@ -87,10 +85,26 @@ class Predictor:
         for column in sibor_row.columns:
             input_data[column] = sibor_row[column].values[0]
 
+        # Define the mapping from flat_type to an ordinal number
+        flat_type_mapping = {
+            '1 ROOM': 1,
+            '2 ROOM': 2,
+            '3 ROOM': 3,
+            '4 ROOM': 4,
+            '5 ROOM': 5,
+            'EXECUTIVE': 6,
+            'MULTI-GENERATION': 7,
+        }
+
+        # Apply the mapping to the 'flat_type' column
+        input_data['flat_type_ordinal'] = input_data['flat_type'].replace(flat_type_mapping)
+
+        # Optionally, if you no longer need the original 'flat_type' column, you can drop it
+        input_data.drop('flat_type', axis=1, inplace=True)
+
         # Load the dummies from the training set
         train_set = pd.read_csv(DATA_PATH)
-        categorical_vars = ['flat_type', 'storey_range',
-                            'flat_model', 'district', 'month']
+        categorical_vars = ['storey_range', 'flat_model', 'district', 'month']
         train_set_dummies = pd.get_dummies(train_set, columns=categorical_vars)
         input_data_dummies = pd.get_dummies(
             input_data, columns=categorical_vars)
@@ -100,7 +114,7 @@ class Predictor:
             if column not in input_data_dummies.columns:
                 input_data_dummies[column] = 0
 
-        input_data_preprocessed = input_data_dummies[NUM_COLS + [
+        input_data_preprocessed = input_data_dummies[NUM_COLS + ['flat_type_ordinal'] + [
             col for col in train_set_dummies.columns if col not in NUM_COLS]]
 
         # Scale the numerical features
@@ -113,6 +127,7 @@ class Predictor:
         """Predict the resale price for a given set of features."""
         input_data = pd.DataFrame([kwargs])
         input_data_preprocessed = self.preprocess_input(input_data)
+        print(input_data_preprocessed)
 
         # Adjusting to use 'dataframe_split' format for prediction
         data = input_data_preprocessed.to_dict(orient='split')
