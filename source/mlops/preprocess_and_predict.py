@@ -48,6 +48,34 @@ def convert_remaining_lease(years: int, months: int) -> int:
     return years * 12 + months
 
 
+def data_quality_checks(input_data: pd.DataFrame) -> None:
+    """Perform data quality checks on the input data."""
+    # Check for missing values
+    if input_data.isnull().values.any():
+        raise ValueError("Input data contains missing values.")
+    # Check for negative values
+    if (input_data < 0).values.any():
+        raise ValueError("Input data contains negative values.")
+    # Check for invalid values
+    if (input_data['year'] < 0).values.any():
+        raise ValueError("Year must be a non-negative integer.")
+    if (input_data['month'] < 1) | (input_data['month'] > 12):
+        raise ValueError("Month must be an integer between 1 and 12.")
+    if (input_data['remaining_lease'] < 0).values.any() or not isinstance(input_data['remaining_lease'], int):
+        raise ValueError("Remaining lease must be a non-negative integer.")
+    if (input_data['floor_area_sqm'] < 0).values.any() or (
+        not isinstance(input_data['remaining_lease'], int) 
+        and not isinstance(input_data['remaining_lease'], float)):
+        raise ValueError("Floor area must be a non-negative float or integer.")
+    if (input_data['flat_type'] not in ['1 ROOM', '2 ROOM', '3 ROOM', '4 ROOM', '5 ROOM', 'EXECUTIVE', 'MULTI-GENERATION']):
+        raise ValueError("Invalid flat type.")
+    if not isinstance(input_data['flat_model'], str):
+        raise ValueError("Flat model must be a string.")
+    if not isinstance(input_data['storey_range'], str):
+        raise ValueError("Storey range must be a string.")
+    if not isinstance(input_data['district'], str):
+        raise ValueError("District must be a string.")
+
 def preprocess_input(input_data: pd.DataFrame, scaler: StandardScaler, cpi_row: pd.DataFrame, sibor_row: pd.DataFrame) -> pd.DataFrame:
     """Preprocess a single row of input data."""
     # Merge CPI and SIBOR data with input_data
@@ -56,6 +84,14 @@ def preprocess_input(input_data: pd.DataFrame, scaler: StandardScaler, cpi_row: 
     for column in sibor_row.columns:
         input_data[column] = sibor_row[column].values[0]
 
+    # Perform data quality checks
+    try:
+        data_quality_checks(input_data)
+    except ValueError as e:
+        print(f"Data quality checks failed: {e}")
+        # Ignore row if data quality checks fail
+        return None
+    
     # Assuming 'year' and 'month' columns are present for sale_date
     input_data['sale_date'] = datetime(
         input_data['year'], input_data['month'], 1)
