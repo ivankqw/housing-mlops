@@ -3,7 +3,7 @@
 
 1. Build the docker image with the model (don't need to start mlflow tracking server)
 ```bash
-mlflow models build-docker -m mlartifacts/0/7eba7d2fd2ae4f019ce155ba1338b95b/artifacts/model -n xgboost_dev --enable-mlserver
+mlflow models build-docker -m mlartifacts/0/14d46f61c8bd43d48c364d72029e90b4/artifacts/model -n xgboost_dev --enable-mlserver
 ```
 
 2. Run the docker image
