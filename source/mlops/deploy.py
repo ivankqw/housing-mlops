@@ -28,8 +28,8 @@ def run_model_server_image(image_name: str, port: int, mlflow_default_port: int 
 def test_dev_server(port: int) -> bool:
     print("Testing dev server")
 
-    test_files = ["test_data_type.csv",
-                  "test_extreme_values.csv", "test_null_values.csv"]
+    test_files = ["tests/test_data_type.csv",
+                  "tests/test_extreme_values.csv", "tests/test_null_values.csv"]
     predictor = Predictor(8002)
     for test_file in test_files:
         try:
