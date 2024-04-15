@@ -65,8 +65,6 @@ class Predictor:
         """Convert remaining lease to total months."""
         return years * 12 + months
 
-    import pandas as pd
-
     def data_quality_checks(self, input_data: pd.DataFrame) -> None:
         """Perform data quality checks on the input data."""
         print("Performing data quality checks on the input data...")
@@ -232,20 +230,4 @@ class Predictor:
 
         input_data['predicted_price'] = predictions
         return input_data
-
-# if __name__ == "__main__":
-
-    # test_files = ["tests/test_extreme_values.csv", "tests/test_null_values.csv"]
-    # test_files = ["tests/test_data_type.csv",
-    #               "tests/test_extreme_values.csv", "tests/test_null_values.csv"]
-    # test_files = ["tests/test_data_type.csv"]
-    # predictor = Predictor(8002)
-    # for test_file in test_files:
-    #     print(test_file)
-    #     try:
-    #         predictor.predict_csv(test_file)
-    #     except Exception as e:
-    #         print(f"Failed to predict for {test_file}: {e}")
-    #         raise e
-    # print("All rows processed.")
 
