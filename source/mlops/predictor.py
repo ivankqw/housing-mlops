@@ -65,10 +65,58 @@ class Predictor:
         """Convert remaining lease to total months."""
         return years * 12 + months
 
+    import pandas as pd
+
+    def data_quality_checks(self, input_data: pd.DataFrame) -> None:
+        """Perform data quality checks on the input data."""
+        print("Performing data quality checks on the input data...")
+
+        def check_column(data, column_name, condition, error_message):
+            try:
+                if not condition(data[column_name]):
+                    raise ValueError(error_message)
+            except (TypeError, ValueError) as e:
+                print(f"Error in column '{column_name}': {e}")
+                raise e
+
+        # Check for invalid values in 'year'
+        check_column(input_data, 'year', lambda x: (x < 0).any() or (lambda x : isinstance((int,float))), "Year must be a non-negative integer.")
+        #  if (input_data['year'] < 0).any() or ~(input_data['year'].apply(lambda x: isinstance(x, (int,float)))).all():
+
+        # Check for invalid values in 'month'
+        check_column(input_data, 'month', lambda x: (x.between(1, 12) & (x.astype(int) == x)).all(), "Month must be an integer between 1 and 12.")
+
+        # Check for invalid values in 'remaining_lease_years'
+        check_column(input_data, 'remaining_lease_years', lambda x: (x >= 0).all() and (x.astype(int) == x).all(), "Remaining lease must be a non-negative integer.")
+
+        # Check for invalid values in 'floor_area_sqm'
+        check_column(input_data, 'floor_area_sqm', lambda x: (x >= 0).all(), "Floor area must be a non-negative float or integer.")
+
+        # Check for invalid values in 'flat_type'
+        valid_flat_types = ['1 ROOM', '2 ROOM', '3 ROOM', '4 ROOM', '5 ROOM', 'EXECUTIVE', 'MULTI-GENERATION']
+        check_column(input_data, 'flat_type', lambda x: x.isin(valid_flat_types).all(), "Invalid flat type.")
+
+        # Check for valid data types in 'flat_model', 'storey_range', and 'district'
+        check_column(input_data, 'flat_model', lambda x: x.apply(lambda y: isinstance(y, str)).all(), "Flat model must be a string.")
+        check_column(input_data, 'storey_range', lambda x: x.apply(lambda y: isinstance(y, str)).all(), "Storey range must be a string.")
+        check_column(input_data, 'district', lambda x: x.apply(lambda y: isinstance(y, (int,float))).all(), "District must be a string.")
+
+        print("Data quality checks completed successfully.")
+
     def preprocess_input(self, input_data: pd.DataFrame) -> pd.DataFrame:
         """Preprocess a single row of input data."""
-        cpi_row, sibor_row = self.find_relevant_external_data(
-            input_data['year'].iloc[0], input_data['month'].iloc[0], 1, self.cpi_data, self.sibor_data)
+        try:
+            self.data_quality_checks(input_data)
+            print("Data quality checks passed.")
+        except (TypeError,ValueError) as e:
+            print(f"Data quality checks failed: {e}, Ignoring row.")
+            return None
+        try:
+            cpi_row, sibor_row = self.find_relevant_external_data(
+                int(input_data['year'].iloc[0]), int(input_data['month'].iloc[0]), 1, self.cpi_data, self.sibor_data)
+        except (ValueError, OverflowError) as e:
+            print(f"Fail to find relevant external data,Error: {e}")
+            return None
 
         for column in cpi_row.columns:
             try:
@@ -78,12 +126,16 @@ class Predictor:
                     self.cpi_data, self.sibor_data)
                 break
 
-        # Merge CPI and SIBOR data with input_data
-        for column in cpi_row.columns:
-            input_data[column] = cpi_row[column].values[0]
+        try:
+            # Merge CPI and SIBOR data with input_data
+            for column in cpi_row.columns:
+                input_data[column] = cpi_row[column].values[0]
 
-        for column in sibor_row.columns:
-            input_data[column] = sibor_row[column].values[0]
+            for column in sibor_row.columns:
+                input_data[column] = sibor_row[column].values[0]
+        except IndexError:
+            print("Error: No relevant CPI and SIBOR data found.")
+            return None
 
         # Define the mapping from flat_type to an ordinal number
         flat_type_mapping = {
@@ -116,10 +168,13 @@ class Predictor:
 
         input_data_preprocessed = input_data_dummies[NUM_COLS + ['flat_type_ordinal'] + [
             col for col in train_set_dummies.columns if col not in NUM_COLS]]
-
-        # Scale the numerical features
-        input_data_preprocessed[NUM_COLS] = self.feature_scaler.transform(
-            input_data_preprocessed[NUM_COLS])
+        try:
+            # Scale the numerical features
+            input_data_preprocessed[NUM_COLS] = self.feature_scaler.transform(
+                input_data_preprocessed[NUM_COLS])
+        except ValueError as e:
+            print(f"Failed to sclae numerical features, Error: {e}")
+            return None
 
         return input_data_preprocessed
 
@@ -127,6 +182,9 @@ class Predictor:
         """Predict the resale price for a given set of features."""
         input_data = pd.DataFrame([kwargs])
         input_data_preprocessed = self.preprocess_input(input_data)
+
+        if input_data_preprocessed is None:
+            return None
         print(input_data_preprocessed)
 
         # Adjusting to use 'dataframe_split' format for prediction
@@ -175,4 +233,19 @@ class Predictor:
         input_data['predicted_price'] = predictions
         return input_data
 
-    
+# if __name__ == "__main__":
+
+    # test_files = ["tests/test_extreme_values.csv", "tests/test_null_values.csv"]
+    # test_files = ["tests/test_data_type.csv",
+    #               "tests/test_extreme_values.csv", "tests/test_null_values.csv"]
+    # test_files = ["tests/test_data_type.csv"]
+    # predictor = Predictor(8002)
+    # for test_file in test_files:
+    #     print(test_file)
+    #     try:
+    #         predictor.predict_csv(test_file)
+    #     except Exception as e:
+    #         print(f"Failed to predict for {test_file}: {e}")
+    #         raise e
+    # print("All rows processed.")
+
