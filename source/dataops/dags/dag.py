@@ -36,6 +36,11 @@ def property_pipeline():
     data_path_private_transactions = extract_ura_data_task()
     datagov_dict = extract_datagovsg_data_task()
 
+    # send data quality email after ingestion
+    send_data_profiling_email(data_path_cpi)
+    send_data_profiling_email(data_path_private_transactions)
+    send_data_profiling_email(datagov_dict["df_resale_flat_transactions"])
+
     # Transform
     data_path_private_transactions = transform_private_transactions_task(
         data_path_private_transactions
