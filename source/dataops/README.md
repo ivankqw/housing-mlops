@@ -1,64 +1,50 @@
-# Setup Airflow with docker
+# DataOps Support
 
-**You need to be in this directory**
+This directory contains the necessary components to support DataOps practices using Airflow and Docker Compose.
 
-1. Install docker desktop and start it up
-https://www.docker.com/products/docker-desktop/
+## Airflow Setup with Docker Compose
 
-2. You need at least 4GB memory, check
-```bash
-docker run --rm "debian:bullseye-slim" bash -c 'numfmt --to iec $(echo $(($(getconf _PHYS_PAGES) * $(getconf PAGE_SIZE))))'
-```
+The following directories are used to set up Airflow using Docker Compose, enabling Infrastructure as Code (IaC):
 
-3. Create required directories (1st time only)
-```bash
-mkdir -p ./dags ./logs ./plugins ./config
-```
+- `config`: Contains Airflow configuration files.
+- `dags`: Contains Airflow DAG definitions for orchestrating data workflows.
+- `logs`: Stores Airflow logs. (NA)
+- `plugins`: Contains custom Airflow plugins. (NA)
 
-4. init database (1st time only)
-```bash
-docker compose up airflow-init
-```
-5. Start the services (compose with build)
-```bash 
-docker compose up --build
-```
+The `docker-compose.yml` file defines the services and their configurations for running Airflow.
 
-5. Open the webserver
-http://localhost:8080
-- **Login: airflow**
-- **Password: airflow**
+## DAG Files
 
-6. Stop the services
-```bash
-docker compose down
-```
-or ctrl-c in the terminal to gracefully stop the services
+- `dag.py`: Defines the main Airflow DAG that orchestrates the property pipeline. It includes tasks for data extraction, transformation, loading, and sending data profiling emails.
 
-# Establish connection to the database (postgres) from airflow
-- go to http://localhost:8080/admin/connection/
-- Create a new connection
-    - Conn Id: bt4301_postgres
-    - Conn Type: postgres
-    - Host: dataops-external_db-1
-    - Database: db
-    - Login: db
-    - Password: db
-    - Port: 5432
+- `cfg.py`: Contains configuration variables used across the DAG files, such as file paths and API URLs.
 
-# Establish connection to database (postgres) via psql
-https://www.postgresql.org/download/
+- `dataops.py`: Provides utility functions for data quality reporting and generating charts for numerical and categorical columns.
 
-```bash
-PGPASSWORD=db psql -h localhost -p 5433 -U db -d db
-```
-Now you can run SQL commands in the terminal!
+- `email_dataprofiling.py`: Implements tasks for generating data profiling reports and sending them via email.
 
-# Establish connection to database (postgres) via pgadmin
-1. Open pgadmin
-2. Add a new server
-    - Host: 127.0.0.1
-    - Port: 5433
-    - Username: db
-    - Password: db
+- `extract_datagovsg.py`: Defines tasks for extracting data from the Data.gov.sg API, including resale flat transactions and HDB property information.
+
+- `extract_singstat.py`: Defines a task for extracting CPI data from the SingStat API.
+
+- `extract_ura.py`: Defines a task for extracting private property transaction data from the URA API.
+
+- `load.py`: Defines tasks for loading the extracted and transformed data into a PostgreSQL database.
+
+- `transform_datagovsg.py`: Defines tasks for transforming the extracted Data.gov.sg data, including district transformation and resale flat data processing.
+
+- `transform_ura.py`: Defines a task for transforming the extracted URA private property transaction data.
+
+These DAG files work together to define and orchestrate the data pipeline, handling data extraction from various sources, transformation, loading into a database, and generating data profiling reports.
+
+The `charts` directory contains Jupyter notebooks and scripts for exploratory data analysis and visualization. These notebooks help gain insights into the datasets and guide feature engineering decisions.
+
+## DataOps Practices
+
+The setup in this directory supports key DataOps practices:
+
+- **Infrastructure as Code**: Docker Compose allows defining and managing the Airflow infrastructure as code.
+- **Data Orchestration**: Airflow DAGs enable orchestration of data ingestion, transformation, and processing workflows.
+- **Automation**: Airflow automates the execution of data pipelines on a scheduled or event-driven basis.
+- **Monitoring**: Airflow provides monitoring capabilities to track the status and performance of data workflows.
 
