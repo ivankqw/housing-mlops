@@ -2,7 +2,7 @@ from dotenv import load_dotenv
 import sys
 import os 
 
-sys.path.append("../deployment")
+sys.path.append("deployment")
 from deploy import build_model_server_image, run_model_server_image
 
 
