@@ -1,0 +1,15 @@
+artifact_uri: mlflow-artifacts:/0/08f5fe0400f649b283b222fa850dc091/artifacts
+end_time: 1711726654144
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+run_id: 08f5fe0400f649b283b222fa850dc091
+run_name: resilient-cub-967
+run_uuid: 08f5fe0400f649b283b222fa850dc091
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1711726642144
+status: 3
+tags: []
+user_id: ivankoh

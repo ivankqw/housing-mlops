@@ -1,0 +1,15 @@
+artifact_uri: mlflow-artifacts:/0/a4e061e14928418cbce808a5b90462ec/artifacts
+end_time: 1711719769864
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+run_id: a4e061e14928418cbce808a5b90462ec
+run_name: omniscient-toad-552
+run_uuid: a4e061e14928418cbce808a5b90462ec
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1711719764513
+status: 3
+tags: []
+user_id: ivankoh

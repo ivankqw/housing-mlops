@@ -1,0 +1,14 @@
+aliases: []
+creation_timestamp: 1711718465759
+current_stage: None
+description: ''
+last_updated_timestamp: 1711718465759
+name: XGBoostResalePricePrediction
+run_id: 709239b403a44bef87a88a17ef5f4890
+run_link: ''
+source: mlflow-artifacts:/0/709239b403a44bef87a88a17ef5f4890/artifacts/model
+status: READY
+status_message: null
+storage_location: mlflow-artifacts:/0/709239b403a44bef87a88a17ef5f4890/artifacts/model
+user_id: null
+version: 1
